@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(s.sclawfilter))
+	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SCARECLAW}
