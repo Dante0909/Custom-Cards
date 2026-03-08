@@ -1,0 +1,91 @@
+local s,id=GetID()
+function s.initial_effect(c)
+	Pendulum.AddProcedure(c)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e2)
+	
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetCost(Cost.SelfTribute)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,{id,2})
+	e3:SetTarget(s.pltg)
+	e3:SetOperation(s.pzop)
+	c:RegisterEffect(e3)
+end
+
+function s.thfilter(c)
+	return c:ListsCounter(COUNTER_SPELL) and c:IsAbleToHand()
+end
+
+function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return not c:IsRace(RACE_SPELLCASTER) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+end
+
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter, tp, LOCATION_DECK, 0, 1, nil) end
+	Duel.SetOperationInfo(0, CATEGORY_TOHAND, nil, 1, tp, LOCATION_DECK)
+end
+
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp, s.thfilter, tp, LOCATION_DECK, 0, 1, 1, nil)
+	if #g>0 then
+		Duel.SendtoHand(g, nil, REASON_EFFECT)
+		Duel.ConfirmCards(1-tp, g)
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(s.splimit)
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		
+		local e2=Effect.CreateEffect(c)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
+		e2:SetDescription(aux.Stringid(id,1))
+		e2:SetReset(RESET_PHASE|PHASE_END)
+		e2:SetTargetRange(1,0)
+		Duel.RegisterEffect(e2,tp)
+		
+	end
+end
+
+--filter
+function s.spfilter(c,e,tp)
+	return (c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_PZONE) or c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_MZONE)) and c:IsType(TYPE_PENDULUM)
+		and not c:IsForbidden()
+end
+
+--lagality
+function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return
+		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		and Duel.CheckPendulumZones(tp)
+	end
+end
+
+--effect
+function s.pzop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.CheckPendulumZones(tp) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	if tc then
+		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
+	end
+end
