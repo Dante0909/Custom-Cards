@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MMZONE)
 	e2:SetTargetRange(LOCATION_MMZONE,0)
 	e2:SetTarget(function(e,c) return c:IsSetCard(SET_SCARECLAW) end)
-	e2:SetValue(1)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SCARECLAW}
