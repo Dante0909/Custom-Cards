@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
 	--Anti Targetting
-	local e1=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
