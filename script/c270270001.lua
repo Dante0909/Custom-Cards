@@ -27,19 +27,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 
+--has spell counter and can be added to hand
 function s.thfilter(c)
 	return c:ListsCounter(COUNTER_SPELL) and c:IsAbleToHand()
 end
 
+--can only pendulum summon spellcasters
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_SPELLCASTER) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 
+--legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter, tp, LOCATION_DECK, 0, 1, nil) end
 	Duel.SetOperationInfo(0, CATEGORY_TOHAND, nil, 1, tp, LOCATION_DECK)
 end
 
+--add card
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp, s.thfilter, tp, LOCATION_DECK, 0, 1, 1, nil)
@@ -67,24 +71,25 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 --filter
-function s.spfilter(c,e,tp)
-	return (c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_PZONE) or c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_MZONE)) and c:IsType(TYPE_PENDULUM)
+s.listed_series={SET_ENDYMION}
+function s.spfilter(c)
+	return c:IsSetCard(SET_ENDYMION) and c:IsType(TYPE_PENDULUM)
 		and not c:IsForbidden()
 end
 
---lagality
+--legality
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return
-		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+		Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED,0,1,niL)
 		and Duel.CheckPendulumZones(tp)
 	end
 end
 
---effect
+--places card in pendulum
 function s.pzop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckPendulumZones(tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
