@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_FUSION}
+s.listed_series={SET_FUTURE_FUSION}
 function s.setfilter(c)
-	return c:IsSetCard(SET_FUSION) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FUTURE_FUSION) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
