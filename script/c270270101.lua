@@ -23,16 +23,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
-	--Add 1 "Cyber Spell/Trap" from your Deck to your hand
-	local e1=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id)
-	e3:SetCost(s.tfcost)
-	e3:SetTarget(s.tftg)
-	e3:SetOperation(s.tfop)
-	c:RegisterEffect(e3)
 end
 s.listed_series={SET_FUTURE_FUSION}
 function s.setfilter(c)
