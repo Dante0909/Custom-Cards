@@ -27,6 +27,7 @@ end
 s.listed_series={SET_FUTURE_FUSION}
 function s.setfilter(c)
 	return c:IsSetCard(SET_FUTURE_FUSION) and c:IsSpellTrap() and c:IsSSetable()
+		and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
