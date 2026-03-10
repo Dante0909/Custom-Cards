@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 
-s.listed_series={SET_FUTURE_FUSION, SET_CYBER, SET_CYBER, SET_CYBERNETIC}
+s.listed_series={SET_FUTURE_FUSION, SET_CYBER, SET_CYBERNETIC}
 
 function s.setfilter(c)
 	return c:IsSetCard(0x8262) and c:IsSpellTrap() and c:IsSSetable()
@@ -76,7 +76,7 @@ function s.foperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.stFilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
-		Duel.SendToHand(g,nil,REASON_EFFECT)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
