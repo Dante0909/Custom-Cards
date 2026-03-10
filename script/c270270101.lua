@@ -69,7 +69,7 @@ end
 
 function s.ftarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.stFilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0, CATEGORY_TOHAND, nil, 1,tp,LOCATION_DECK
+	Duel.SetOperationInfo(0, CATEGORY_TOHAND, nil, 1,tp,LOCATION_DECK)
 end
 
 function s.foperation(e,tp,eg,ep,ev,re,r,rp)

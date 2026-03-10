@@ -1,5 +1,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE|LOCATION_MZONE)
 	Pendulum.AddProcedure(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
