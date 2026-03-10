@@ -29,11 +29,11 @@ s.listed_series={SET_FUTURE_FUSION}
 function s.setfilter(c)
 	return c:IsSetCard(0x8262) and c:IsSpellTrap() and c:IsSSetable()
 end
-function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
-end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLinkSummoned()
+end
+function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
