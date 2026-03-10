@@ -64,7 +64,7 @@ function s.fcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk ==0 then return Duel.IsExistingMatchingCard(s.csfilter, tp, LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG, tp, HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.csfilter,tp,LOCATION_SZONE,0,1,1,nil)
-	Duel.SendToGrave(g, REASON_COST)
+	Duel.SendtoGrave(g, REASON_COST)
 end
 
 function s.ftarget(e,tp,eg,ep,ev,re,r,rp,chk)
