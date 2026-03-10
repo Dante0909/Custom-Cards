@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCountLimit(1,{id,0})
+	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
@@ -29,12 +29,15 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCost(s.fcost)
+	e2:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.ftarget)
 	e3:SetOperation(s.foperation)
 	e3:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_FUTURE_FUSION}
+
+s.listed_series={SET_FUTURE_FUSION, SET_CYBER, SET_CYBER, SET_CYBERNETIC}
+
 function s.setfilter(c)
 	return c:IsSetCard(0x8262) and c:IsSpellTrap() and c:IsSSetable()
 end
@@ -54,6 +57,8 @@ function s.csfilter(c)
 end
 
 function s.stFilter(c)
+	return (c:IsSetCard(SET_CYBER) or c:IsSetCard(SET_CYBERNETIC)) and c:IsSpellTrap() and c:IsAbleToHand()
+end
 
 function s.fcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk ==0 then return Duel.IsExistingMatchingCard(s.csfilter, tp, LOCATION_SZONE,0,1,nil) end
