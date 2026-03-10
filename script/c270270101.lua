@@ -23,6 +23,15 @@ function s.initial_effect(c)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
+	
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetCost(s.fcost)
+	e3:SetTarget(s.ftarget)
+	e3:SetOperation(s.foperation)
+	e3:SetRange(LOCATION_MZONE)
+	c:RegisterEffect(e3)
 end
 s.listed_series={SET_FUTURE_FUSION}
 function s.setfilter(c)
@@ -36,5 +45,32 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SSet(tp,g)
+	end
+end
+
+function s.csfilter(c)
+	return c:IsFaceup() and c:IsContinuousSpell() and c:IsAbleToGraveAsCost()
+end
+
+function s.stFilter(c)
+
+function s.fcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk ==0 then return Duel.IsExistingMatchingCard(s.csfilter, tp, LOCATION_SZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG, tp, HINMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.csfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	Duel.SendToGrave(g, REASON_COST)
+end
+
+function s.ftarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.stFilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0, CATEGORY_TOHAND, nil, 1,tp,LOCATION_DECK
+end
+
+function s.foperation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+	local g=Duel.SelectMatchingCard(tp,s.stFilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendToHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
