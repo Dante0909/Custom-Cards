@@ -62,7 +62,7 @@ end
 
 function s.fcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk ==0 then return Duel.IsExistingMatchingCard(s.csfilter, tp, LOCATION_SZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG, tp, HINMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG, tp, HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.csfilter,tp,LOCATION_SZONE,0,1,1,nil)
 	Duel.SendToGrave(g, REASON_COST)
 end
@@ -73,7 +73,7 @@ function s.ftarget(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function s.foperation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.stFilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendToHand(g,nil,REASON_EFFECT)
