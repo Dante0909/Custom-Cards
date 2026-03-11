@@ -1,5 +1,5 @@
 --Cyber Mirai Dragon
---Scripted by Hawky
+--Scripted by Hawky and Dante
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

@@ -1,3 +1,5 @@
+--Envoy of Endymion
+--Scripted by Dante
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE|LOCATION_MZONE)
@@ -26,7 +28,28 @@ function s.initial_effect(c)
 	e3:SetTarget(s.pltg)
 	e3:SetOperation(s.pzop)
 	c:RegisterEffect(e3)
+	
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetCode(EVENT_CHAIN_SOLVING)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetRange(LOCATION_PZONE)
+	e4:SetOperation(s.passiveCounter)
+	c:RegisterEffect(e4)
+	
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,3))
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_COUNTER)
+	e5:SetCountLimit(1,{id,3})
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_PZONE)
+	e5:SetCost(s.spcost)
+	e5:SetTarget(s.sptg)
+	e5:SetOperation(s.spop)
+	c:RegisterEffect(e5)
 end
+s.counter_place_list={COUNTER_SPELL}
+s.listed_series={SET_ENDYMION}
 
 --has spell counter and can be added to hand
 function s.thfilter(c)
@@ -72,7 +95,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 --filter
-s.listed_series={SET_ENDYMION}
 function s.spfilter(c)
 	return c:IsSetCard(SET_ENDYMION) and c:IsType(TYPE_PENDULUM)
 		and not c:IsForbidden()
@@ -94,4 +116,38 @@ function s.pzop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
+end
+
+
+function s.passiveCounter(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:GetHandler()~=c then
+		local dc=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanAddCounter,COUNTER_SPELL,1,false,LOCATION_ONFIELD),tp,LOCATION_ONFIELD,0,nil)
+		for tc in aux.Next(dc) do
+			if re:GetHandler()~=tc then
+				tc:AddCounter(COUNTER_SPELL, 1)
+			end
+		end
+	end
+end
+
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsCanRemoveCounter(tp,COUNTER_SPELL,3,REASON_COST) end
+	c:RemoveCounter(tp,COUNTER_SPELL,3,REASON_COST)
+end
+
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,2,tp,LOCATION_PZONE)
+end
+
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not (c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>=1))
+		then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	c:AddCounter(COUNTER_SPELL,1)
 end
