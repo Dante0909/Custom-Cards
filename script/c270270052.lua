@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={SET_SCARECLAW}
-end
+
 function s.contactfil(tp)
 	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then loc=LOCATION_ONFIELD end
