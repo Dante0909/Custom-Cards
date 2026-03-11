@@ -5,13 +5,13 @@ function s.initial_effect(c)
 	--Special Summon procedure
 		c:EnableReviveLimit()
 	--"Visas Starfrost" + 3 "Scareclaw" Monsters
-
 	Fusion.AddProcMix(c,true,true,CARD_VISAS_STARFROST,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SCARECLAW),3)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
+
 	
 end
 s.listed_names={CARD_VISAS_STARFROST}
-function s.matfilter(c)
-
+s.listed_series={SET_SCARECLAW}
 end
 function s.contactfil(tp)
 	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
