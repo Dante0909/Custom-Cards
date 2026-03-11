@@ -20,7 +20,7 @@ s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
 s.material_setcode={SET_SCARECLAW}
 function s.matfilter(c)
-	return c:IsMonster(3) and c:IsSet(SCARECLAW)
+	return c:IsMonster() and c:IsSet_SCARECLAW(3)
 end
 function s.contactfil(tp)
 	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
