@@ -38,6 +38,9 @@ end
 
 s.listed_series={SET_FUTURE_FUSION, SET_CYBER, SET_CYBERNETIC}
 
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSummonCode,1,nil,lc,sumtype,tp,CARD_CYBER_DRAGON)
+end
 function s.setfilter(c)
 	return c:IsSetCard(0x8262) and c:IsSpellTrap() and c:IsSSetable()
 end
