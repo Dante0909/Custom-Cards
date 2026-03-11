@@ -19,7 +19,9 @@ end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
 s.material_setcode={SET_SCARECLAW}
-
+function s.descostfilter(c)
+	return c:IsSetCard(SET_SCARECLAW) and c:IsMonster()
+end
 function s.contactfil(tp)
 	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then loc=LOCATION_ONFIELD end
