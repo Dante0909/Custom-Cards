@@ -6,7 +6,7 @@ function s.initial_effect(c)
 		c:EnableReviveLimit()
 	--"Visas Starfrost" + 3 "Scareclaw" Monsters
 	Fusion.AddProcMixN(c,true,true,CARD_VISAS_STARFROST,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SCARECLAW),3)
-	Fusion.AddContactProc(s.contactfil,s.contactop,true)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
