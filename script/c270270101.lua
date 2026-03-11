@@ -1,5 +1,5 @@
 --Cyber Mirai Dragon
---Scripted by Hawky and Dante
+--Scripted by Dante & Hawky
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -29,7 +29,20 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCost(s.fcost)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	e2:SetCountLimit(1,{id,1})
+<<<<<<< HEAD
+	e2:SetCountLimit(1,{id,0})
+=======
+	e2:SetCountLimit(1,{id,2})
+>>>>>>> ff218305a27a947ed691bcd9703abcd1cba2bc32
+=======
 	e3:SetCountLimit(1,{id,2})
+>>>>>>> cd7c5eb7739ab796fdf1d7fb4fc407d35efb1ea7
+=======
+	e3:SetCountLimit(1,{id,2})
+>>>>>>> cd7c5eb7739ab796fdf1d7fb4fc407d35efb1ea7
 	e3:SetTarget(s.ftarget)
 	e3:SetOperation(s.foperation)
 	e3:SetRange(LOCATION_MZONE)
