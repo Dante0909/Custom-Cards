@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Special Summon procedure
 		c:EnableReviveLimit()
 	--"Visas Starfrost" + 3 "Scareclaw" Monsters
-	Fusion.AddProcMixN(c,true,true,CARD_VISAS_STARFROST,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SCARECLAW),3)
+	Fusion.AddProcMixN(c,true,true,CARD_VISAS_STARFROST,1,s.matfilter),3)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
 	--immune
 	local e2=Effect.CreateEffect(c)
