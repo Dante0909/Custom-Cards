@@ -7,6 +7,14 @@ function s.initial_effect(c)
 	--"Visas Starfrost" + 3 "Scareclaw" Monsters
 	Fusion.AddProcMixN(c,true,true,CARD_VISAS_STARFROST,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SCARECLAW),3)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
+	--immune
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_IMMUNE_EFFECT)
+	e2:SetValue(s.efilter)
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
@@ -19,4 +27,7 @@ function s.contactfil(tp)
 end
 function s.contactop(g)
 	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
+end
+function s.efilter(e,te)
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end
