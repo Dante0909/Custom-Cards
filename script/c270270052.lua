@@ -41,7 +41,7 @@ function s.efilter(e,te)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 --Cannot Special Summon, from the extra deck except Scareclaw monsters or Vicious Astraloud
-	local e3=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
