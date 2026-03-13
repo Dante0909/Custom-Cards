@@ -51,6 +51,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-unction s.counterfilter(c)
+function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)
 end
