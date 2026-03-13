@@ -16,11 +16,15 @@ function s.initial_effect(c)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 	--Cannot Special Summon, from the extra deck except Scareclaw monsters or Vicious Astraloud
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetOperation(s.regop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(function(e,c) return not c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684) end)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
@@ -38,19 +42,4 @@ function s.contactop(g)
 end
 function s.efilter(e,te)
 	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	--Cannot Special Summon from the extra deck except Scareclaw monsters or Vicious Astraloud
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetTargetRange(1,0)
-	e3:SetTarget(s.splimit)
-	e3:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e3,tp)
-end
-function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)
 end
