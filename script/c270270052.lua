@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
-end
 	--Cannot Special Summon, from the extra deck except Scareclaw monsters or Vicious Astraloud
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
