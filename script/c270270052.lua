@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.counterfilter(c)
-	return (c:IsSetCard(SET_SCARECLAW) or IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
+	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function s.matfilter(c)
 	return c:IsSetCard(SET_SCARECLAW) and c:IsMonster()
