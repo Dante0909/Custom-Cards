@@ -41,7 +41,8 @@ function s.efilter(e,te)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	--Cannot Special Summon from the extra deck except Scareclaw monsters or Vicious Astraloud
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -50,6 +51,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-function s.counterfilter(c)
+function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)
 end
