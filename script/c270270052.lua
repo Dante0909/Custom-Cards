@@ -52,5 +52,5 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-return not c:IsLocation(LOCATION_EXTRA) and c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)
+return not c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)
 end
