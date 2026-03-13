@@ -23,8 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 		Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
-			--Lizard check
-	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
+		
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
@@ -43,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.counterfilter(c)
-	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
+	return not (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation(LOCATION_EXTRA)
 end
 function s.matfilter(c)
 	return c:IsSetCard(SET_SCARECLAW) and c:IsMonster()
@@ -73,7 +72,4 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684))
-end
-function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(SET_SCARECLAW)
 end
