@@ -19,11 +19,11 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCost(s.cost)
+	e3:SetCost(function(_,_,tp) return Duel.GetCustomActivityCountCount(id,tp,ACTIVITY_SPSUMMON)==0 end)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 		Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
-		
+
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
@@ -42,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.counterfilter(c)
-	return not (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation(LOCATION_EXTRA)
+	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function s.matfilter(c)
 	return c:IsSetCard(SET_SCARECLAW) and c:IsMonster()
