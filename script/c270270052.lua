@@ -23,12 +23,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 		Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
+			--Lizard check
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
 s.material_setcode={SET_SCARECLAW}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	--Cannot Special Summon from the Extra Deck, except Machines
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
@@ -71,4 +73,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684))
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(SET_SCARECLAW)
 end
