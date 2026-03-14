@@ -68,7 +68,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e4:SetValue(ct*200)
 		c:RegisterEffect(e4)
-	end
 	if c:IsRelateToEffect(e) then
 		local reset=RESET_SELF_TURN
 		if Duel.IsTurnPlayer(tp) then reset=RESET_OPPO_TURN end
