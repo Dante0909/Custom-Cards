@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e4:SetCountLimit(1)
+	e4:SetCountLimit(1,id)
 	e4:SetTarget(s.tdtg)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
@@ -41,7 +41,7 @@ s.listed_names={CARD_VISAS_STARFROST}
 s.material_setcode={SET_SCARECLAW}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
-	--Cannot Special Summon from the Extra Deck, except Machines
+	--Cannot Special Summon from the Extra Deck, except Scareclaw monsters of vicious astraloud
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -67,7 +67,13 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e4:SetValue(ct*200)
+			e4:SetOperation(s.thop)
 		c:RegisterEffect(e4)
+	end
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+		local dg=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_DECK,0,1,1,nil)
+		Duel.SendtoGrave(dg,REASON_EFFECT)
 	end
 end
 function s.counterfilter(c)
