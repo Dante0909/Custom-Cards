@@ -74,7 +74,6 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoGrave(dg,REASON_EFFECT)
-	end
 end
 function s.counterfilter(c)
 	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
