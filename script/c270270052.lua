@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--retun & atkup
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE+CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
@@ -69,6 +69,14 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(ct*200)
 		c:RegisterEffect(e4)
 	end
+function s.tgfilter(c)
+    return c:IsAbleToGrave() and c:IsSetCard(SET_SCARECLAW)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+    local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+    if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0) then
+	Duel.BreakEffect()    Duel.SendtoGrave(g,REASON_EFFECT)
+	end 
 end
 function s.counterfilter(c)
 	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
