@@ -66,14 +66,11 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
-		e4:SetValue(ct*200)
-			e4:SetOperation(s.thop)
+		e4:SetValue(ct*200) then
+			local dg=Duel.SelectMatchingCard((tp,IsSetCard(SET_SCARECLAW),tp,LOCATION_DECK,0,1,1,nil))
+			Duel.SendtoGrave(dg,REASON_EFFECT)
 		c:RegisterEffect(e4)
 	end
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-		local dg=Duel.IsSetCard(SET_SCARECLAW)(tp,LOCATION_DECK,0,1,1,nil)
-		Duel.SendtoGrave(dg,REASON_EFFECT)
 end
 function s.counterfilter(c)
 	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
