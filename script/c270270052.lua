@@ -66,9 +66,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
-		e4:SetValue(ct*200) then
-			local dg=Duel.SelectMatchingCard((tp,IsSetCard(SET_SCARECLAW),tp,LOCATION_DECK,0,1,1,nil))
-			Duel.SendtoGrave(dg,REASON_EFFECT)
+		e4:SetValue(ct*200)
 		c:RegisterEffect(e4)
 	end
 end
