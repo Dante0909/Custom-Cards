@@ -23,7 +23,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 		Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
-
+	--retun & atkup
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	e4:SetCountLimit(1)
+	e4:SetTarget(s.tdtg)
+	e4:SetOperation(s.tdop)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
@@ -40,6 +51,24 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
+end
+function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,PLAYER_ALL,LOCATION_REMOVED|LOCATION_GRAVE)
+end
+function s.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetFieldGroup(tp,LOCATION_REMOVED|LOCATION_GRAVE,LOCATION_REMOVED|LOCATION_GRAVE)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
+		e4:SetType(EFFECT_TYPE_SINGLE)
+		e4:SetCode(EFFECT_UPDATE_ATTACK)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
+		e4:SetValue(ct*200)
+		c:RegisterEffect(e4)
+	end
 end
 function s.counterfilter(c)
 	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
