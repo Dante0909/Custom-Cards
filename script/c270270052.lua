@@ -62,7 +62,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
+		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
