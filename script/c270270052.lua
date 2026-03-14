@@ -72,7 +72,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-		local dg=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_DECK,0,1,1,nil)
+		local dg=Duel.IsSetCard(SET_SCARECLAW)(tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoGrave(dg,REASON_EFFECT)
 end
 function s.counterfilter(c)
