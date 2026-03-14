@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--retun & atkup
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE+CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
@@ -67,9 +67,25 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e4:SetValue(ct*200)
+		e4:SetTarget(s.target)
+		e4:SetOperation(s.activate)
 		c:RegisterEffect(e4)
+end
+function s.tgfilter(c)
+	return c:IsSetCard(SET_SCARECLAW)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
+
 function s.counterfilter(c)
 	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
 end
