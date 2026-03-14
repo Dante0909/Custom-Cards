@@ -74,7 +74,7 @@ function s.tgfilter(c)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
     local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-    if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0) then
+    if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 	Duel.BreakEffect()    Duel.SendtoGrave(g,REASON_EFFECT)
 	end 
 end
