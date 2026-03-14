@@ -69,12 +69,11 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(ct*200)
 		c:RegisterEffect(e4)
 	end
-	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		local reset=RESET_SELF_TURN
 		if Duel.IsTurnPlayer(tp) then reset=RESET_OPPO_TURN end
 		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
-		end
+end
 function s.tgfilter(c)
     return c:IsAbleToGrave() and c:IsSetCard(SET_SCARECLAW)
 	end
