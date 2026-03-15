@@ -72,7 +72,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 function s.tgfilter(c)
     return c:IsAbleToGrave() and c:IsSetCard(SET_SCARECLAW)
 	end
-	if Duel.IsExistingMatchingCard(s.thfilter, tp, LOCATION_DECK, 0, 1, nil) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) 
+	if Duel.IsExistingMatchingCard(s.thfilter, tp, LOCATION_DECK, 0, 1, nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) 
 then
 Duel.BreakEffect()
 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
