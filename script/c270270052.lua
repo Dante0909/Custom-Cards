@@ -79,12 +79,6 @@ function s.tgfilter(c)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end 
-	if Duel.IsExistingMatchingCard(s.thfilter, tp, LOCATION_DECK, 0, 1, nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) 
-then
-Duel.BreakEffect()
-Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-    if #g>0 then    Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.counterfilter(c)
 	return (c:IsSetCard(SET_SCARECLAW) or c:IsCode(65815684)) or c:GetSummonLocation()~=LOCATION_EXTRA
