@@ -62,6 +62,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local reset=RESET_SELF_TURN
 		if Duel.IsTurnPlayer(tp) then reset=RESET_OPPO_TURN end
 		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		end
 	local g=Duel.GetFieldGroup(tp,LOCATION_REMOVED|LOCATION_GRAVE,LOCATION_REMOVED|LOCATION_GRAVE)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
