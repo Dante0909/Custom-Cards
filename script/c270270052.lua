@@ -1,5 +1,5 @@
 --Visas Pravus
---Scripted by Hawky
+--Scripted by Hawky and Dante
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon procedure
