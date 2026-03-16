@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE|LOCATION_MZONE)
 	Pendulum.AddProcedure(c,false)
-	Fusion.AddProcMixN(c,false,false,s.matfilter,1)
+	Fusion.AddProcMixN(c,false,false,s.matfilter,5)
 	Fusion.AddContactProc(c, s.contactfil,s.contactop,false,nil,1)
 	
 	--only special once through its own effect
