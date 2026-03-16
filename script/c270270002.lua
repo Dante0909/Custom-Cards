@@ -156,7 +156,7 @@ end
 function s.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
 	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	return te:IsSpellEffect()
+	return p==tp and te:IsSpellEffect()
 end
 
 function s.indtg(e,c)
