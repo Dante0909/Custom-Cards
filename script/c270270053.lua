@@ -12,8 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={270270054}
 s.listed_series={SET_SCARECLAW}
-s.listed_names={CARD_SCARECLAW_UPRISING}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,1000,3,RACE_BEAST,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE) end
